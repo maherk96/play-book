@@ -47,6 +47,9 @@ public class Season {
   @Column(nullable = false, precision = 16, scale = 2)
   private BigDecimal minBuyIn;
 
+  @Column(nullable = false, precision = 16, scale = 2)
+  private BigDecimal initialChipCount;
+
   @OneToMany(mappedBy = "season")
   private Set<Game> seasonGames;
 

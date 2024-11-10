@@ -39,9 +39,6 @@ public class SeasonPlayer {
   private Long seasonPlayerId;
 
   @Column(nullable = false, precision = 16, scale = 2)
-  private BigDecimal initialChipCount;
-
-  @Column(nullable = false, precision = 16, scale = 2)
   private BigDecimal remainingChipCount;
 
   @ManyToOne(fetch = FetchType.LAZY)

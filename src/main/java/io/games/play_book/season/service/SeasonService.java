@@ -78,13 +78,11 @@ public class SeasonService {
   public long create(final SeasonDTO seasonDTO) {
     logger.info("Creating new season: {}", seasonDTO.getName());
 
-    // Validate uniqueness of season name
     if (seasonRepository.findByName(seasonDTO.getName()).isPresent()) {
       throw new IllegalArgumentException(
           "Season with name '" + seasonDTO.getName() + "' already exists.");
     }
 
-    // Validate date range
     if (seasonDTO.getEndDate() != null
         && !seasonDTO.getEndDate().isAfter(seasonDTO.getStartDate())) {
       throw new IllegalArgumentException("End date must be after start date.");
@@ -178,6 +176,7 @@ public class SeasonService {
    */
   private SeasonDTO mapToDTO(final Season season, final SeasonDTO seasonDTO) {
     seasonDTO.setSeasonId(season.getSeasonId());
+    seasonDTO.setInitialChipCount(season.getInitialChipCount());
     seasonDTO.setCreatedAt(season.getCreatedAt());
     seasonDTO.setEndDate(season.getEndDate());
     seasonDTO.setName(season.getName());
@@ -199,6 +198,7 @@ public class SeasonService {
     season.setName(seasonDTO.getName());
     season.setStartDate(seasonDTO.getStartDate());
     season.setMinBuyIn(seasonDTO.getMinBuyIn());
+    season.setInitialChipCount(seasonDTO.getInitialChipCount());
     return season;
   }
 

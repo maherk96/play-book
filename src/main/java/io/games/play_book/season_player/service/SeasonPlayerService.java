@@ -86,7 +86,6 @@ public class SeasonPlayerService {
   private SeasonPlayerDTO mapToDTO(
       final SeasonPlayer seasonPlayer, final SeasonPlayerDTO seasonPlayerDTO) {
     seasonPlayerDTO.setSeasonPlayerId(seasonPlayer.getSeasonPlayerId());
-    seasonPlayerDTO.setInitialChipCount(seasonPlayer.getInitialChipCount());
     seasonPlayerDTO.setRemainingChipCount(seasonPlayer.getRemainingChipCount());
     seasonPlayerDTO.setPlayer(
         seasonPlayer.getPlayer() == null ? null : seasonPlayer.getPlayer().getPlayerId());
@@ -97,7 +96,6 @@ public class SeasonPlayerService {
 
   private SeasonPlayer mapToEntity(
       final SeasonPlayerDTO seasonPlayerDTO, final SeasonPlayer seasonPlayer) {
-    seasonPlayer.setInitialChipCount(seasonPlayerDTO.getInitialChipCount());
     seasonPlayer.setRemainingChipCount(seasonPlayerDTO.getRemainingChipCount());
     final Player player =
         seasonPlayerDTO.getPlayer() == null
