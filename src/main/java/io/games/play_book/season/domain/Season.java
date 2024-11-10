@@ -31,7 +31,7 @@ public class Season {
       allocationSize = 1,
       initialValue = 10000)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "primary_sequence")
-  private Long seasonId;
+  private long seasonId;
 
   @Column(nullable = false)
   private OffsetDateTime createdAt;

@@ -45,7 +45,7 @@ public class PlayerParticipationService {
         .orElseThrow(NotFoundException::new);
   }
 
-  public Integer create(final PlayerParticipationDTO playerParticipationDTO) {
+  public long create(final PlayerParticipationDTO playerParticipationDTO) {
     final PlayerParticipation playerParticipation = new PlayerParticipation();
     mapToEntity(playerParticipationDTO, playerParticipation);
     return playerParticipationRepository.save(playerParticipation).getParticipationId();

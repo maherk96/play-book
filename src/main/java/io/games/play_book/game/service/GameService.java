@@ -18,6 +18,7 @@ import io.games.play_book.game_result.repos.GameResultRepository;
 import io.games.play_book.player_participation.domain.PlayerParticipation;
 import io.games.play_book.player_participation.repos.PlayerParticipationRepository;
 import io.games.play_book.season.domain.Season;
+import io.games.play_book.season.repos.SeasonRepository;
 import io.games.play_book.util.NotFoundException;
 import io.games.play_book.util.ReferencedWarning;
 
@@ -52,26 +53,26 @@ public class GameService {
     return games.stream().map(game -> mapToDTO(game, new GameDTO())).toList();
   }
 
-  public GameDTO get(final Integer gameId) {
+  public GameDTO get(final long gameId) {
     return gameRepository
         .findById(gameId)
         .map(game -> mapToDTO(game, new GameDTO()))
         .orElseThrow(NotFoundException::new);
   }
 
-  public Integer create(final GameDTO gameDTO) {
+  public long create(final GameDTO gameDTO) {
     final Game game = new Game();
     mapToEntity(gameDTO, game);
     return gameRepository.save(game).getGameId();
   }
 
-  public void update(final Integer gameId, final GameDTO gameDTO) {
+  public void update(final long gameId, final GameDTO gameDTO) {
     final Game game = gameRepository.findById(gameId).orElseThrow(NotFoundException::new);
     mapToEntity(gameDTO, game);
     gameRepository.save(game);
   }
 
-  public void delete(final Integer gameId) {
+  public void delete(final long gameId) {
     gameRepository.deleteById(gameId);
   }
 
@@ -100,7 +101,7 @@ public class GameService {
     return game;
   }
 
-  public ReferencedWarning getReferencedWarning(final Integer gameId) {
+  public ReferencedWarning getReferencedWarning(final long gameId) {
     final ReferencedWarning referencedWarning = new ReferencedWarning();
     final Game game = gameRepository.findById(gameId).orElseThrow(NotFoundException::new);
     final GameBuyIn gameGameBuyIn = gameBuyInRepository.findFirstByGame(game);

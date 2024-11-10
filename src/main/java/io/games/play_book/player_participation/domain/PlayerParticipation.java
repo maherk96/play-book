@@ -30,7 +30,7 @@ public class PlayerParticipation {
       allocationSize = 1,
       initialValue = 10000)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "primary_sequence")
-  private Integer participationId;
+  private Long participationId;
 
   @Column(nullable = false)
   private Boolean participated;

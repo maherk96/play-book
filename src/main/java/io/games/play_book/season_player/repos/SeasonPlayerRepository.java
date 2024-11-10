@@ -6,7 +6,7 @@ import io.games.play_book.player.domain.Player;
 import io.games.play_book.season.domain.Season;
 import io.games.play_book.season_player.domain.SeasonPlayer;
 
-public interface SeasonPlayerRepository extends JpaRepository<SeasonPlayer, Integer> {
+public interface SeasonPlayerRepository extends JpaRepository<SeasonPlayer, Long> {
 
   SeasonPlayer findFirstByPlayer(Player player);
 

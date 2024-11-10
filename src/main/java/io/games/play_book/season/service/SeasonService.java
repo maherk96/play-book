@@ -1,5 +1,14 @@
 package io.games.play_book.season.service;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.Sort;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import io.games.play_book.game.domain.Game;
 import io.games.play_book.game.repos.GameRepository;
 import io.games.play_book.season.domain.Season;
@@ -9,14 +18,6 @@ import io.games.play_book.season_player.domain.SeasonPlayer;
 import io.games.play_book.season_player.repos.SeasonPlayerRepository;
 import io.games.play_book.util.NotFoundException;
 import io.games.play_book.util.ReferencedWarning;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.Sort;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.stream.Collectors;
 
 @Service
 public class SeasonService {
@@ -28,9 +29,9 @@ public class SeasonService {
   private final SeasonPlayerRepository seasonPlayerRepository;
 
   public SeasonService(
-          final SeasonRepository seasonRepository,
-          final GameRepository gameRepository,
-          final SeasonPlayerRepository seasonPlayerRepository) {
+      final SeasonRepository seasonRepository,
+      final GameRepository gameRepository,
+      final SeasonPlayerRepository seasonPlayerRepository) {
     this.seasonRepository = seasonRepository;
     this.gameRepository = gameRepository;
     this.seasonPlayerRepository = seasonPlayerRepository;
@@ -46,8 +47,8 @@ public class SeasonService {
     logger.info("Fetching all seasons sorted by start date.");
     final List<Season> seasons = seasonRepository.findAll(Sort.by(Sort.Direction.ASC, "startDate"));
     return seasons.stream()
-            .map(season -> mapToDTO(season, new SeasonDTO()))
-            .collect(Collectors.toList());
+        .map(season -> mapToDTO(season, new SeasonDTO()))
+        .collect(Collectors.toList());
   }
 
   /**
@@ -58,11 +59,12 @@ public class SeasonService {
    * @throws NotFoundException if the season is not found.
    */
   @Transactional(readOnly = true)
-  public SeasonDTO get(final Long seasonId) {
+  public SeasonDTO get(final long seasonId) {
     logger.info("Fetching season with ID: {}", seasonId);
-    return seasonRepository.findById(seasonId)
-            .map(season -> mapToDTO(season, new SeasonDTO()))
-            .orElseThrow(() -> new NotFoundException("Season not found with ID: " + seasonId));
+    return seasonRepository
+        .findById(seasonId)
+        .map(season -> mapToDTO(season, new SeasonDTO()))
+        .orElseThrow(() -> new NotFoundException("Season not found with ID: " + seasonId));
   }
 
   /**
@@ -73,16 +75,18 @@ public class SeasonService {
    * @throws IllegalArgumentException if the season name already exists or dates are invalid.
    */
   @Transactional
-  public Long create(final SeasonDTO seasonDTO) {
+  public long create(final SeasonDTO seasonDTO) {
     logger.info("Creating new season: {}", seasonDTO.getName());
 
     // Validate uniqueness of season name
     if (seasonRepository.findByName(seasonDTO.getName()).isPresent()) {
-      throw new IllegalArgumentException("Season with name '" + seasonDTO.getName() + "' already exists.");
+      throw new IllegalArgumentException(
+          "Season with name '" + seasonDTO.getName() + "' already exists.");
     }
 
     // Validate date range
-    if (seasonDTO.getEndDate() != null && !seasonDTO.getEndDate().isAfter(seasonDTO.getStartDate())) {
+    if (seasonDTO.getEndDate() != null
+        && !seasonDTO.getEndDate().isAfter(seasonDTO.getStartDate())) {
       throw new IllegalArgumentException("End date must be after start date.");
     }
 
@@ -99,27 +103,31 @@ public class SeasonService {
   /**
    * Updates an existing season.
    *
-   * @param seasonId   The ID of the season to update.
+   * @param seasonId The ID of the season to update.
    * @param seasonDTO The SeasonDTO containing updated details.
-   * @throws NotFoundException        if the season is not found.
+   * @throws NotFoundException if the season is not found.
    * @throws IllegalArgumentException if the season name already exists or dates are invalid.
    */
   @Transactional
-  public void update(final Long seasonId, final SeasonDTO seasonDTO) {
+  public void update(final long seasonId, final SeasonDTO seasonDTO) {
     logger.info("Updating season with ID: {}", seasonId);
 
     // Fetch existing season
-    final Season season = seasonRepository.findById(seasonId)
+    final Season season =
+        seasonRepository
+            .findById(seasonId)
             .orElseThrow(() -> new NotFoundException("Season not found with ID: " + seasonId));
 
     // Validate uniqueness of season name if it's being changed
-    if (!season.getName().equals(seasonDTO.getName()) &&
-            seasonRepository.findByName(seasonDTO.getName()).isPresent()) {
-      throw new IllegalArgumentException("Season with name '" + seasonDTO.getName() + "' already exists.");
+    if (!season.getName().equals(seasonDTO.getName())
+        && seasonRepository.findByName(seasonDTO.getName()).isPresent()) {
+      throw new IllegalArgumentException(
+          "Season with name '" + seasonDTO.getName() + "' already exists.");
     }
 
     // Validate date range
-    if (seasonDTO.getEndDate() != null && !seasonDTO.getEndDate().isAfter(seasonDTO.getStartDate())) {
+    if (seasonDTO.getEndDate() != null
+        && !seasonDTO.getEndDate().isAfter(seasonDTO.getStartDate())) {
       throw new IllegalArgumentException("End date must be after start date.");
     }
 
@@ -135,22 +143,25 @@ public class SeasonService {
    * Deletes a season by its ID.
    *
    * @param seasonId The ID of the season to delete.
-   * @throws NotFoundException        if the season is not found.
+   * @throws NotFoundException if the season is not found.
    * @throws IllegalStateException if the season has existing references.
    */
   @Transactional
-  public void delete(final Long seasonId) {
+  public void delete(final long seasonId) {
     logger.info("Attempting to delete season with ID: {}", seasonId);
 
     // Check if season exists
-    final Season season = seasonRepository.findById(seasonId)
+    final Season season =
+        seasonRepository
+            .findById(seasonId)
             .orElseThrow(() -> new NotFoundException("Season not found with ID: " + seasonId));
 
     // Check for references
     ReferencedWarning warning = getReferencedWarning(seasonId);
     if (warning != null) {
       logger.warn("Season with ID: {} has existing references: {}", seasonId, warning.getKey());
-      throw new IllegalStateException("Cannot delete season as it is referenced by other entities.");
+      throw new IllegalStateException(
+          "Cannot delete season as it is referenced by other entities.");
     }
 
     // Proceed with deletion
@@ -161,7 +172,7 @@ public class SeasonService {
   /**
    * Maps a Season entity to a SeasonDTO.
    *
-   * @param season    The Season entity.
+   * @param season The Season entity.
    * @param seasonDTO The SeasonDTO to populate.
    * @return The populated SeasonDTO.
    */
@@ -179,7 +190,7 @@ public class SeasonService {
    * Maps a SeasonDTO to a Season entity.
    *
    * @param seasonDTO The SeasonDTO containing season details.
-   * @param season    The Season entity to populate.
+   * @param season The Season entity to populate.
    * @return The populated Season entity.
    */
   private Season mapToEntity(final SeasonDTO seasonDTO, final Season season) {
@@ -198,9 +209,11 @@ public class SeasonService {
    * @return ReferencedWarning if references exist, else null.
    */
   @Transactional(readOnly = true)
-  public ReferencedWarning getReferencedWarning(final Long seasonId) {
+  public ReferencedWarning getReferencedWarning(final long seasonId) {
     logger.info("Checking references for season with ID: {}", seasonId);
-    final Season season = seasonRepository.findById(seasonId)
+    final Season season =
+        seasonRepository
+            .findById(seasonId)
             .orElseThrow(() -> new NotFoundException("Season not found with ID: " + seasonId));
 
     final Game seasonGame = gameRepository.findFirstBySeason(season);
@@ -217,7 +230,9 @@ public class SeasonService {
       ReferencedWarning referencedWarning = new ReferencedWarning();
       referencedWarning.setKey("season.seasonPlayer.season.referenced");
       referencedWarning.addParam(seasonSeasonPlayer.getSeasonPlayerId());
-      logger.debug("Season is referenced by season player with ID: {}", seasonSeasonPlayer.getSeasonPlayerId());
+      logger.debug(
+          "Season is referenced by season player with ID: {}",
+          seasonSeasonPlayer.getSeasonPlayerId());
       return referencedWarning;
     }
 

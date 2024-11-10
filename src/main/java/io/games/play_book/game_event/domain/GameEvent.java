@@ -30,7 +30,7 @@ public class GameEvent {
       allocationSize = 1,
       initialValue = 10000)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "primary_sequence")
-  private Integer eventId;
+  private Long eventId;
 
   @Column(nullable = false)
   private String eventType;

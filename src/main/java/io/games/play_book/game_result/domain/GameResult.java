@@ -30,7 +30,7 @@ public class GameResult {
       allocationSize = 1,
       initialValue = 10000)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "primary_sequence")
-  private Integer gameResultId;
+  private Long gameResultId;
 
   @Column(nullable = false, precision = 16, scale = 2)
   private BigDecimal chipCount;

@@ -10,13 +10,13 @@ import lombok.Setter;
 @Setter
 public class PlayerParticipationDTO {
 
-  private Integer participationId;
+  private Long participationId;
 
   @NotNull private Boolean participated;
 
   @NotNull private OffsetDateTime participationTime;
 
-  @NotNull private Integer game;
+  @NotNull private Long game;
 
-  @NotNull private Integer seasonPlayer;
+  @NotNull private Long seasonPlayer;
 }

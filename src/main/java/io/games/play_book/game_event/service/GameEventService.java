@@ -42,7 +42,7 @@ public class GameEventService {
         .orElseThrow(NotFoundException::new);
   }
 
-  public Integer create(final GameEventDTO gameEventDTO) {
+  public long create(final GameEventDTO gameEventDTO) {
     final GameEvent gameEvent = new GameEvent();
     mapToEntity(gameEventDTO, gameEvent);
     return gameEventRepository.save(gameEvent).getEventId();

@@ -18,7 +18,7 @@ public class GameDTO {
 
   @NotNull private OffsetDateTime endTime;
 
-  @NotNull private Integer gameNumber;
+  @NotNull private Long gameNumber;
 
-  @NotNull private Integer season;
+  @NotNull private Long season;
 }

@@ -42,7 +42,7 @@ public class GameBuyInService {
         .orElseThrow(NotFoundException::new);
   }
 
-  public Integer create(final GameBuyInDTO gameBuyInDTO) {
+  public long create(final GameBuyInDTO gameBuyInDTO) {
     final GameBuyIn gameBuyIn = new GameBuyIn();
     mapToEntity(gameBuyInDTO, gameBuyIn);
     return gameBuyInRepository.save(gameBuyIn).getGameBuyInId();

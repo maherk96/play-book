@@ -12,14 +12,14 @@ import lombok.Setter;
 @Setter
 public class GameResultDTO {
 
-  private Integer gameResultId;
+  private Long gameResultId;
 
   @NotNull
   @Digits(integer = 16, fraction = 2)
   @JsonFormat(shape = JsonFormat.Shape.STRING)
   private BigDecimal chipCount;
 
-  @NotNull private Integer game;
+  @NotNull private Long game;
 
-  @NotNull private Integer seasonPlayer;
+  @NotNull private Long seasonPlayer;
 }

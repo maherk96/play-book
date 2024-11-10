@@ -35,7 +35,7 @@ public class Game {
       allocationSize = 1,
       initialValue = 10000)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "primary_sequence")
-  private Integer gameId;
+  private long gameId;
 
   @Column private OffsetDateTime createdAt;
 
@@ -46,7 +46,7 @@ public class Game {
   private OffsetDateTime endTime;
 
   @Column(nullable = false)
-  private Integer gameNumber;
+  private long gameNumber;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "season_id", nullable = false)

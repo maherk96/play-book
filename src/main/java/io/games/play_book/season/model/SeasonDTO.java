@@ -15,7 +15,7 @@ import lombok.Setter;
 @Setter
 public class SeasonDTO {
 
-  private Long seasonId;
+  private long seasonId;
 
   @NotNull private OffsetDateTime createdAt;
 
