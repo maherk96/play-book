@@ -10,7 +10,7 @@ import lombok.Setter;
 @Setter
 public class PlayerParticipationDTO {
 
-  private Integer participationId;
+  private Long participationId;
 
   @NotNull private Boolean participated;
 

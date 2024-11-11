@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class PlayerDTO {
 
-  private Integer playerId;
+  private long playerId;
 
   @NotNull private OffsetDateTime createdAt;
 

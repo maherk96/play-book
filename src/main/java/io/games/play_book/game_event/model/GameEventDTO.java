@@ -11,7 +11,7 @@ import lombok.Setter;
 @Setter
 public class GameEventDTO {
 
-  private Integer eventId;
+  private Long eventId;
 
   @NotNull
   @Size(max = 255)
@@ -19,7 +19,7 @@ public class GameEventDTO {
 
   @NotNull private OffsetDateTime eventTime;
 
-  @NotNull private Integer game;
+  @NotNull private Long game;
 
-  @NotNull private Integer seasonPlayer;
+  @NotNull private Long seasonPlayer;
 }

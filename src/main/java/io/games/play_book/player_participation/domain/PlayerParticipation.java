@@ -1,6 +1,7 @@
 package io.games.play_book.player_participation.domain;
 
 import java.time.OffsetDateTime;
+import java.util.function.LongFunction;
 
 import io.games.play_book.game.domain.Game;
 import io.games.play_book.season_player.domain.SeasonPlayer;
@@ -30,7 +31,7 @@ public class PlayerParticipation {
       allocationSize = 1,
       initialValue = 10000)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "primary_sequence")
-  private Integer participationId;
+  private Long participationId;
 
   @Column(nullable = false)
   private Boolean participated;

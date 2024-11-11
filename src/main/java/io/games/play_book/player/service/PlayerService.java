@@ -31,26 +31,26 @@ public class PlayerService {
     return players.stream().map(player -> mapToDTO(player, new PlayerDTO())).toList();
   }
 
-  public PlayerDTO get(final Integer playerId) {
+  public PlayerDTO get(final long playerId) {
     return playerRepository
         .findById(playerId)
         .map(player -> mapToDTO(player, new PlayerDTO()))
         .orElseThrow(NotFoundException::new);
   }
 
-  public Integer create(final PlayerDTO playerDTO) {
+  public long create(final PlayerDTO playerDTO) {
     final Player player = new Player();
     mapToEntity(playerDTO, player);
     return playerRepository.save(player).getPlayerId();
   }
 
-  public void update(final Integer playerId, final PlayerDTO playerDTO) {
+  public void update(final long playerId, final PlayerDTO playerDTO) {
     final Player player = playerRepository.findById(playerId).orElseThrow(NotFoundException::new);
     mapToEntity(playerDTO, player);
     playerRepository.save(player);
   }
 
-  public void delete(final Integer playerId) {
+  public void delete(final long playerId) {
     playerRepository.deleteById(playerId);
   }
 
@@ -67,7 +67,7 @@ public class PlayerService {
     return player;
   }
 
-  public ReferencedWarning getReferencedWarning(final Integer playerId) {
+  public ReferencedWarning getReferencedWarning(final long playerId) {
     final ReferencedWarning referencedWarning = new ReferencedWarning();
     final Player player = playerRepository.findById(playerId).orElseThrow(NotFoundException::new);
     final SeasonPlayer playerSeasonPlayer = seasonPlayerRepository.findFirstByPlayer(player);

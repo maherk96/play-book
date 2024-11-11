@@ -6,7 +6,7 @@ import io.games.play_book.game.domain.Game;
 import io.games.play_book.game_event.domain.GameEvent;
 import io.games.play_book.season_player.domain.SeasonPlayer;
 
-public interface GameEventRepository extends JpaRepository<GameEvent, Integer> {
+public interface GameEventRepository extends JpaRepository<GameEvent, Long> {
 
   GameEvent findFirstByGame(Game game);
 

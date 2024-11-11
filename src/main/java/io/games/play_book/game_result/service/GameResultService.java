@@ -37,27 +37,27 @@ public class GameResultService {
         .toList();
   }
 
-  public GameResultDTO get(final Integer gameResultId) {
+  public GameResultDTO get(final long gameResultId) {
     return gameResultRepository
         .findById(gameResultId)
         .map(gameResult -> mapToDTO(gameResult, new GameResultDTO()))
         .orElseThrow(NotFoundException::new);
   }
 
-  public Integer create(final GameResultDTO gameResultDTO) {
+  public long create(final GameResultDTO gameResultDTO) {
     final GameResult gameResult = new GameResult();
     mapToEntity(gameResultDTO, gameResult);
     return gameResultRepository.save(gameResult).getGameResultId();
   }
 
-  public void update(final Integer gameResultId, final GameResultDTO gameResultDTO) {
+  public void update(final long gameResultId, final GameResultDTO gameResultDTO) {
     final GameResult gameResult =
         gameResultRepository.findById(gameResultId).orElseThrow(NotFoundException::new);
     mapToEntity(gameResultDTO, gameResult);
     gameResultRepository.save(gameResult);
   }
 
-  public void delete(final Integer gameResultId) {
+  public void delete(final long gameResultId) {
     gameResultRepository.deleteById(gameResultId);
   }
 
