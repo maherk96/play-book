@@ -35,7 +35,7 @@ public class GameEventService {
     return gameEvents.stream().map(gameEvent -> mapToDTO(gameEvent, new GameEventDTO())).toList();
   }
 
-  public GameEventDTO get(final Long eventId) {
+  public GameEventDTO get(final long eventId) {
     return gameEventRepository
         .findById(eventId)
         .map(gameEvent -> mapToDTO(gameEvent, new GameEventDTO()))

@@ -16,7 +16,7 @@ public class PlayerParticipationDTO {
 
   @NotNull private OffsetDateTime participationTime;
 
-  @NotNull private Integer game;
+  @NotNull private Long game;
 
-  @NotNull private Integer seasonPlayer;
+  @NotNull private Long seasonPlayer;
 }

@@ -15,7 +15,7 @@ import lombok.Setter;
 @Setter
 public class SeasonDTO {
 
-  private Long seasonId;
+  private long seasonId;
 
   @NotNull private OffsetDateTime createdAt;
 
@@ -31,4 +31,9 @@ public class SeasonDTO {
   @Digits(integer = 16, fraction = 2)
   @JsonFormat(shape = JsonFormat.Shape.STRING)
   private BigDecimal minBuyIn;
+
+  @NotNull
+  @Digits(integer = 16, fraction = 2)
+  @JsonFormat(shape = JsonFormat.Shape.STRING)
+  private BigDecimal initialChipCount;
 }

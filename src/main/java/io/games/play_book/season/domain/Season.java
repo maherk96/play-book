@@ -31,7 +31,7 @@ public class Season {
       allocationSize = 1,
       initialValue = 10000)
   @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "primary_sequence")
-  private Long seasonId;
+  private long seasonId;
 
   @Column(nullable = false)
   private OffsetDateTime createdAt;
@@ -46,6 +46,9 @@ public class Season {
 
   @Column(nullable = false, precision = 16, scale = 2)
   private BigDecimal minBuyIn;
+
+  @Column(nullable = false, precision = 16, scale = 2)
+  private BigDecimal initialChipCount;
 
   @OneToMany(mappedBy = "season")
   private Set<Game> seasonGames;

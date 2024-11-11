@@ -2,7 +2,6 @@ package io.games.play_book.season_player.service;
 
 import java.util.List;
 
-import io.games.play_book.season.repos.SeasonRepository;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
@@ -17,6 +16,7 @@ import io.games.play_book.player.repos.PlayerRepository;
 import io.games.play_book.player_participation.domain.PlayerParticipation;
 import io.games.play_book.player_participation.repos.PlayerParticipationRepository;
 import io.games.play_book.season.domain.Season;
+import io.games.play_book.season.repos.SeasonRepository;
 import io.games.play_book.season_player.domain.SeasonPlayer;
 import io.games.play_book.season_player.model.SeasonPlayerDTO;
 import io.games.play_book.season_player.repos.SeasonPlayerRepository;
@@ -59,34 +59,33 @@ public class SeasonPlayerService {
         .toList();
   }
 
-  public SeasonPlayerDTO get(final Integer seasonPlayerId) {
+  public SeasonPlayerDTO get(final long seasonPlayerId) {
     return seasonPlayerRepository
         .findById(seasonPlayerId)
         .map(seasonPlayer -> mapToDTO(seasonPlayer, new SeasonPlayerDTO()))
         .orElseThrow(NotFoundException::new);
   }
 
-  public Long create(final SeasonPlayerDTO seasonPlayerDTO) {
+  public long create(final SeasonPlayerDTO seasonPlayerDTO) {
     final SeasonPlayer seasonPlayer = new SeasonPlayer();
     mapToEntity(seasonPlayerDTO, seasonPlayer);
     return seasonPlayerRepository.save(seasonPlayer).getSeasonPlayerId();
   }
 
-  public void update(final Integer seasonPlayerId, final SeasonPlayerDTO seasonPlayerDTO) {
+  public void update(final long seasonPlayerId, final SeasonPlayerDTO seasonPlayerDTO) {
     final SeasonPlayer seasonPlayer =
         seasonPlayerRepository.findById(seasonPlayerId).orElseThrow(NotFoundException::new);
     mapToEntity(seasonPlayerDTO, seasonPlayer);
     seasonPlayerRepository.save(seasonPlayer);
   }
 
-  public void delete(final Integer seasonPlayerId) {
+  public void delete(final long seasonPlayerId) {
     seasonPlayerRepository.deleteById(seasonPlayerId);
   }
 
   private SeasonPlayerDTO mapToDTO(
       final SeasonPlayer seasonPlayer, final SeasonPlayerDTO seasonPlayerDTO) {
     seasonPlayerDTO.setSeasonPlayerId(seasonPlayer.getSeasonPlayerId());
-    seasonPlayerDTO.setInitialChipCount(seasonPlayer.getInitialChipCount());
     seasonPlayerDTO.setRemainingChipCount(seasonPlayer.getRemainingChipCount());
     seasonPlayerDTO.setPlayer(
         seasonPlayer.getPlayer() == null ? null : seasonPlayer.getPlayer().getPlayerId());
@@ -97,7 +96,6 @@ public class SeasonPlayerService {
 
   private SeasonPlayer mapToEntity(
       final SeasonPlayerDTO seasonPlayerDTO, final SeasonPlayer seasonPlayer) {
-    seasonPlayer.setInitialChipCount(seasonPlayerDTO.getInitialChipCount());
     seasonPlayer.setRemainingChipCount(seasonPlayerDTO.getRemainingChipCount());
     final Player player =
         seasonPlayerDTO.getPlayer() == null
@@ -116,7 +114,7 @@ public class SeasonPlayerService {
     return seasonPlayer;
   }
 
-  public ReferencedWarning getReferencedWarning(final Integer seasonPlayerId) {
+  public ReferencedWarning getReferencedWarning(final long seasonPlayerId) {
     final ReferencedWarning referencedWarning = new ReferencedWarning();
     final SeasonPlayer seasonPlayer =
         seasonPlayerRepository.findById(seasonPlayerId).orElseThrow(NotFoundException::new);

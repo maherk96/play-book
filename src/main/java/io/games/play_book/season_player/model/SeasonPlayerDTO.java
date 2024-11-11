@@ -17,11 +17,6 @@ public class SeasonPlayerDTO {
   @NotNull
   @Digits(integer = 16, fraction = 2)
   @JsonFormat(shape = JsonFormat.Shape.STRING)
-  private BigDecimal initialChipCount;
-
-  @NotNull
-  @Digits(integer = 16, fraction = 2)
-  @JsonFormat(shape = JsonFormat.Shape.STRING)
   private BigDecimal remainingChipCount;
 
   @NotNull private Long player;

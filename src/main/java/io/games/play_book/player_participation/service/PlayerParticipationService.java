@@ -59,7 +59,7 @@ public class PlayerParticipationService {
     playerParticipationRepository.save(playerParticipation);
   }
 
-  public void delete(final Integer participationId) {
+  public void delete(final long participationId) {
     playerParticipationRepository.deleteById(participationId);
   }
 
