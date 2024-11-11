@@ -35,7 +35,7 @@ public class GameEventService {
     return gameEvents.stream().map(gameEvent -> mapToDTO(gameEvent, new GameEventDTO())).toList();
   }
 
-  public GameEventDTO get(final Integer eventId) {
+  public GameEventDTO get(final long eventId) {
     return gameEventRepository
         .findById(eventId)
         .map(gameEvent -> mapToDTO(gameEvent, new GameEventDTO()))
@@ -48,14 +48,14 @@ public class GameEventService {
     return gameEventRepository.save(gameEvent).getEventId();
   }
 
-  public void update(final Integer eventId, final GameEventDTO gameEventDTO) {
+  public void update(final long eventId, final GameEventDTO gameEventDTO) {
     final GameEvent gameEvent =
         gameEventRepository.findById(eventId).orElseThrow(NotFoundException::new);
     mapToEntity(gameEventDTO, gameEvent);
     gameEventRepository.save(gameEvent);
   }
 
-  public void delete(final Integer eventId) {
+  public void delete(final long eventId) {
     gameEventRepository.deleteById(eventId);
   }
 

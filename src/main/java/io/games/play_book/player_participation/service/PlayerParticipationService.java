@@ -38,7 +38,7 @@ public class PlayerParticipationService {
         .toList();
   }
 
-  public PlayerParticipationDTO get(final Integer participationId) {
+  public PlayerParticipationDTO get(final long participationId) {
     return playerParticipationRepository
         .findById(participationId)
         .map(playerParticipation -> mapToDTO(playerParticipation, new PlayerParticipationDTO()))
@@ -52,14 +52,14 @@ public class PlayerParticipationService {
   }
 
   public void update(
-      final Integer participationId, final PlayerParticipationDTO playerParticipationDTO) {
+      final long participationId, final PlayerParticipationDTO playerParticipationDTO) {
     final PlayerParticipation playerParticipation =
         playerParticipationRepository.findById(participationId).orElseThrow(NotFoundException::new);
     mapToEntity(playerParticipationDTO, playerParticipation);
     playerParticipationRepository.save(playerParticipation);
   }
 
-  public void delete(final Integer participationId) {
+  public void delete(final long participationId) {
     playerParticipationRepository.deleteById(participationId);
   }
 

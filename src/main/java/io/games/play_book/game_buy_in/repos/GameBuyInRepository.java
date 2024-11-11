@@ -6,7 +6,7 @@ import io.games.play_book.game.domain.Game;
 import io.games.play_book.game_buy_in.domain.GameBuyIn;
 import io.games.play_book.season_player.domain.SeasonPlayer;
 
-public interface GameBuyInRepository extends JpaRepository<GameBuyIn, Integer> {
+public interface GameBuyInRepository extends JpaRepository<GameBuyIn, Long> {
 
   GameBuyIn findFirstByGame(Game game);
 

@@ -35,7 +35,7 @@ public class GameBuyInService {
     return gameBuyIns.stream().map(gameBuyIn -> mapToDTO(gameBuyIn, new GameBuyInDTO())).toList();
   }
 
-  public GameBuyInDTO get(final Integer gameBuyInId) {
+  public GameBuyInDTO get(final long gameBuyInId) {
     return gameBuyInRepository
         .findById(gameBuyInId)
         .map(gameBuyIn -> mapToDTO(gameBuyIn, new GameBuyInDTO()))
@@ -48,14 +48,14 @@ public class GameBuyInService {
     return gameBuyInRepository.save(gameBuyIn).getGameBuyInId();
   }
 
-  public void update(final Integer gameBuyInId, final GameBuyInDTO gameBuyInDTO) {
+  public void update(final long gameBuyInId, final GameBuyInDTO gameBuyInDTO) {
     final GameBuyIn gameBuyIn =
         gameBuyInRepository.findById(gameBuyInId).orElseThrow(NotFoundException::new);
     mapToEntity(gameBuyInDTO, gameBuyIn);
     gameBuyInRepository.save(gameBuyIn);
   }
 
-  public void delete(final Integer gameBuyInId) {
+  public void delete(final long gameBuyInId) {
     gameBuyInRepository.deleteById(gameBuyInId);
   }
 
